@@ -18,7 +18,7 @@ Using the setup.exe file:
 2. Enter the bot token and channelID in the respective fields.
 3. Once completed, the setup.exe file will save the configuration and compile the goRAT with the user's Discord bot configuration.
 
-![Setup](src/setup.png)
+<img src="src/setup.png" alt="Setup" width="456" height="320" />
 
 #### Compiling the setup.exe file manually:
 If you prefer to compile the `setup.exe` file yourself, you can do so by running the following command in Go:
