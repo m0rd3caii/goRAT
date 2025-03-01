@@ -52,5 +52,5 @@ Every time the RAT is executed, the bot will create a private channel in Discord
 ### TODO
 
 - [x] AMSI Patch
-
-
+- [ ] Upload and Download Files
+- [ ] Persistence
