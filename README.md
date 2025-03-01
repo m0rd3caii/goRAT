@@ -45,4 +45,10 @@ Every time the RAT is executed, the bot will create a private channel in Discord
 
 - `🏃‍♂️ {Command Here}`: Execute any command on the target machine. Replace {Command Here} with the desired command you want to run on the target machine .
 ![GitHub](src/run.png)
+
 - `💀`: This command will stop the RAT and effectively halting the remote session.
+
+### TODO
+
+- [ ] Task 1: Run the setup.exe file
+
