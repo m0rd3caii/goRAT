@@ -47,17 +47,9 @@ Every time the RAT is executed, the bot will create a private channel in Discord
 ![GitHub](src/run.png)
 
 - `💀`: This command will stop the RAT and effectively halting the remote session.
-<<<<<<< HEAD
 
 ### TODO
 
-- [ ] Task 1: Run the setup.exe file
-
-=======
-
-### TODO
-
-- [ ] Task 1: Run the setup.exe file
+- [x] AMSI Patch
 
 
->>>>>>> 9a7841491d7493137d45d2f807c9d71cc554b9e1
