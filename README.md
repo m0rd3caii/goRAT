@@ -34,11 +34,11 @@ Once the RAT is executed on a target machine, a private channel is automatically
 
 Every time the RAT is executed, the bot will create a private channel in Discord and report the following details about the target machine:
 
-- IP Address: The private IP address of the target machine.
-- User: The username of the logged-in user on the target machine.
-- Hostname: The hostname of the target machine.
-- OS: The operating system running on the target machine.
-- CWD (Current Working Directory): The current working directory of the target machine.
+- **IP Address:** The private IP address of the target machine.
+- **User:** The username of the logged-in user on the target machine.
+- **Hostname:** The hostname of the target machine.
+- **OS:** The operating system running on the target machine.
+- **CWD (Current Working Directory):** The current working directory of the target machine.
 
 #### Available Commands:
 
