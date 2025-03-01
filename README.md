@@ -12,8 +12,8 @@ GoRAT (Go Remote Access Tool) is an extremely powerful yet simple remote adminis
 
 To configure the project, the user needs to use the setup.exe file to input the bot token and channelID. This file will allow the necessary parameters for the bot to be set up correctly.
 
-Using the setup.exe file:
-1. Run the setup.exe file.
+Using the `setup.exe` file:
+1. Run the `setup.exe` file.
 2. Enter the bot token and channelID in the respective fields.
 3. Once completed, the setup.exe file will save the configuration and compile the goRAT with the user's Discord bot configuration.
 
