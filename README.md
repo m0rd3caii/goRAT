@@ -7,7 +7,7 @@ GoRAT (Go Remote Access Tool) is an extremely powerful yet simple remote adminis
 
 | 64Bit Distros       | 32Bit Distros                 |
 |---------------------|-------------------------------|
-| Windows 10,11       | Windows 10,10                 |
+| Windows 10,11       | Windows 10,11                 |
 
 ### Configuration
 
