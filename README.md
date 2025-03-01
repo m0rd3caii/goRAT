@@ -1,7 +1,6 @@
 ![GitHub](src/Banner.png)
 
 GoRAT (Go Remote Access Tool) is an extremely powerful yet simple remote administration tool controlled via a Discord bot. The project is still in development, with ongoing work to implement new commands for automating post-exploitation and information gathering.
-**Disclaimer:** This tool is intended for educational purposes, CTF players, Go enthusiasts, and security experts.
 
 ### Supported Distros:
 
@@ -54,3 +53,8 @@ Every time the RAT is executed, the bot will create a private channel in Discord
 - [x] AMSI Patch
 - [ ] Upload and Download Files
 - [ ] Persistence
+
+### Disclaimer
+
+The use of GoRAT to attack targets without explicit consent is unlawful. It is the responsibility of the end user to comply with all relevant local, state, and federal regulations. We disclaim any liability and are not accountable for any misuse or harm caused by this software. This tool is intended solely for educational purposes and ethical hacking. Several components within this software are governed by their own respective licenses.
+
