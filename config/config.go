@@ -1,8 +1,9 @@
 package config
 
 var (
-	BotToken  string
-	ChannelID string
+	BotToken    string
+	ChannelID   string
+	PrivateChan string
 )
 
 func LoadConfig() {
