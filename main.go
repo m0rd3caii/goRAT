@@ -209,7 +209,7 @@ func main() {
 	}
 
 	sessionId := fmt.Sprintf("sess-%d", rand.Intn(9999-1000)+1000)
-	c, err := dg.GuildChannelCreate(config.ChannelID, sessionId, 0)
+	c, err := dg.GuildChannelCreate(config.ServerID, sessionId, 0)
 	if err != nil || c == nil {
 		fmt.Println("Error creating channel:", err)
 		return
