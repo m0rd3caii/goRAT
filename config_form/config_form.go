@@ -90,7 +90,7 @@ func form() {
 	botTokenEntry.SetPlaceHolder("Enter your bot token here...")
 
 	channelIDEntry := widget.NewEntry()
-	channelIDEntry.SetPlaceHolder("Enter the target channel ID...")
+	channelIDEntry.SetPlaceHolder("Enter the target server ID...")
 
 	// Styled containers for entries
 	botTokenBackground := canvas.NewRectangle(color.NRGBA{R: 255, G: 255, B: 255, A: 255})
@@ -194,7 +194,7 @@ func form() {
 	tokenLabelText.TextSize = 16
 	tokenLabelText.Alignment = fyne.TextAlignLeading
 
-	channelLabelText := canvas.NewText("Channel ID:", color.NRGBA{R: 25, G: 25, B: 112, A: 255}) // Blue color
+	channelLabelText := canvas.NewText("Server ID:", color.NRGBA{R: 25, G: 25, B: 112, A: 255}) // Blue color
 	channelLabelText.TextStyle = fyne.TextStyle{Bold: true}
 	channelLabelText.TextSize = 16
 	channelLabelText.Alignment = fyne.TextAlignLeading
@@ -224,7 +224,7 @@ func form() {
 	tokenInfo.Importance = widget.LowImportance
 
 	channelInfo := widget.NewButtonWithIcon("", theme.InfoIcon(), func() {
-		dialog.ShowInformation("Information", "The channel ID can be obtained by right-clicking on a channel in Discord and selecting 'Copy ID'.", myWindow)
+		dialog.ShowInformation("Information", "The Server ID can be obtained by right-clicking on a server in Discord and selecting 'Copy ID'.", myWindow)
 	})
 	channelInfo.Importance = widget.LowImportance
 
