@@ -24,7 +24,7 @@ If you prefer to compile the `setup.exe` file yourself, you can do so by running
 ```sh
 go build -o setup.exe -ldflags "-H=windowsgui" .\config_form\config_form.go
 ```
-This command will compile the project and create the `setup.exe` file, which will allow you to input the `bot token` and `channelID` and then compile the goRAT with the user's Discord bot configuration.
+This command will compile the project and create the `setup.exe` file, which will allow you to input the `bot token` and `serverID` and then compile the goRAT with the user's Discord bot configuration.
 
 ### Using Discord Commands 
 
