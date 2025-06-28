@@ -89,8 +89,8 @@ func form() {
 	botTokenEntry := widget.NewEntry()
 	botTokenEntry.SetPlaceHolder("Enter your bot token here...")
 
-	channelIDEntry := widget.NewEntry()
-	channelIDEntry.SetPlaceHolder("Enter the target server ID...")
+	ServerIDEntry := widget.NewEntry()
+	ServerIDEntry.SetPlaceHolder("Enter the target channel ID...")
 
 	// Styled containers for entries
 	botTokenBackground := canvas.NewRectangle(color.NRGBA{R: 255, G: 255, B: 255, A: 255})
@@ -101,13 +101,13 @@ func form() {
 	)
 	botTokenContainer.Resize(fyne.NewSize(700, 40))
 
-	channelIDBackground := canvas.NewRectangle(color.NRGBA{R: 255, G: 255, B: 255, A: 255})
-	channelIDBackground.CornerRadius = 8
-	channelIDContainer := container.NewMax(
-		channelIDBackground,
-		container.NewPadded(channelIDEntry),
+	ServerIDBackground := canvas.NewRectangle(color.NRGBA{R: 255, G: 255, B: 255, A: 255})
+	ServerIDBackground.CornerRadius = 8
+	ServerIDContainer := container.NewMax(
+		ServerIDBackground,
+		container.NewPadded(ServerIDEntry),
 	)
-	channelIDContainer.Resize(fyne.NewSize(700, 40))
+	ServerIDContainer.Resize(fyne.NewSize(700, 40))
 
 	// Status indicators - initially hidden
 	statusIndicator := canvas.NewText("", color.NRGBA{R: 70, G: 70, B: 70, A: 255})
@@ -121,9 +121,9 @@ func form() {
 	// Enhanced compile button
 	compileButton := widget.NewButtonWithIcon("Compile and Configure", theme.ConfirmIcon(), func() {
 		botToken := botTokenEntry.Text
-		channelID := channelIDEntry.Text
+		ServerID := ServerIDEntry.Text
 
-		if botToken == "" || channelID == "" {
+		if botToken == "" || ServerID == "" {
 			dialog.ShowError(fmt.Errorf("Error: Bot Token and Channel ID fields cannot be empty."), myWindow)
 			return
 		}
@@ -152,7 +152,7 @@ func form() {
 			statusIndicator.Text = "Saving configuration..."
 			statusIndicator.Refresh()
 
-			if err := updateConfigFile(botToken, channelID); err != nil {
+			if err := updateConfigFile(botToken, ServerID); err != nil {
 				dialog.ShowError(fmt.Errorf("Error updating configuration file: %v", err), myWindow)
 				resetProgress(statusIndicator, progressBar)
 				return
@@ -194,7 +194,7 @@ func form() {
 	tokenLabelText.TextSize = 16
 	tokenLabelText.Alignment = fyne.TextAlignLeading
 
-	channelLabelText := canvas.NewText("Server ID:", color.NRGBA{R: 25, G: 25, B: 112, A: 255}) // Blue color
+	channelLabelText := canvas.NewText("Channel ID:", color.NRGBA{R: 25, G: 25, B: 112, A: 255}) // Blue color
 	channelLabelText.TextStyle = fyne.TextStyle{Bold: true}
 	channelLabelText.TextSize = 16
 	channelLabelText.Alignment = fyne.TextAlignLeading
@@ -224,7 +224,7 @@ func form() {
 	tokenInfo.Importance = widget.LowImportance
 
 	channelInfo := widget.NewButtonWithIcon("", theme.InfoIcon(), func() {
-		dialog.ShowInformation("Information", "The Server ID can be obtained by right-clicking on a server in Discord and selecting 'Copy ID'.", myWindow)
+		dialog.ShowInformation("Information", "The channel ID can be obtained by right-clicking on a channel in Discord and selecting 'Copy ID'.", myWindow)
 	})
 	channelInfo.Importance = widget.LowImportance
 
@@ -237,7 +237,7 @@ func form() {
 			botTokenContainer,
 			widget.NewSeparator(),
 			container.NewHBox(channelLabelImg, layout.NewSpacer(), channelInfo),
-			channelIDContainer,
+			ServerIDContainer,
 			layout.NewSpacer(),
 			statusIndicator,
 			progressBar,
@@ -250,7 +250,7 @@ func form() {
 			botTokenContainer,
 			widget.NewSeparator(),
 			container.NewHBox(channelLabelText, layout.NewSpacer(), channelInfo),
-			channelIDContainer,
+			ServerIDContainer,
 			layout.NewSpacer(),
 			statusIndicator,
 			progressBar,
@@ -351,20 +351,20 @@ func resetProgress(statusIndicator *canvas.Text, progressBar *widget.ProgressBar
 	progressBar.SetValue(0)
 }
 
-func updateConfigFile(botToken, channelID string) error {
+func updateConfigFile(botToken, ServerID string) error {
 	content := fmt.Sprintf(`package config
 
 var (
     BotToken  string
-    ChannelID string
-    PrivateChan string
+    ServerID string
+	PrivateChan string
 )
 
 func LoadConfig() {
     BotToken = "%s"
-    ChannelID = "%s"
+    ServerID = "%s"
 }
-`, botToken, channelID)
+`, botToken, ServerID)
 
 	return os.WriteFile(configFilePath, []byte(content), 0644)
 }
