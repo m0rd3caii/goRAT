@@ -357,7 +357,7 @@ func updateConfigFile(botToken, ServerID string) error {
 var (
     BotToken  string
     ServerID string
-	PrivateChan string
+    PrivateChan string
 )
 
 func LoadConfig() {
